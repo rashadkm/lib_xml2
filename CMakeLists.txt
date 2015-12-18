@@ -83,36 +83,132 @@ elseif(WIN32)
     list(APPEND TARGET_LINK_LIB Ws2_32.lib Secur32.lib)
 endif()        
 
+include(configure)
 
 include(find_anyproject)
 
 if(WITH_THREADS)
   find_package(Threads REQUIRED)
   list(APPEND TARGET_LINK_LIB ${CMAKE_THREAD_LIBS_INIT})
+  if(THREADS_FOUND)
+    add_definitions(-DLIBXML_THREAD_ENABLED)
+  endif()
 endif()
 
 find_anyproject(ZLIB)
 find_anyproject(ICONV)
 find_anyproject(LZMA)
 
-configure_file(${CMAKE_MODULE_PATH}/xmlversion.h.in ${CMAKE_CURRENT_BINARY_DIR}/libxml/xmlversion.h IMMEDIATE @ONLY )
+configure_file(${CMAKE_MODULE_PATH}/xmlversion.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/libxml/xmlversion.h IMMEDIATE @ONLY )
 configure_file(${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake IMMEDIATE @ONLY)
 configure_file(${CMAKE_MODULE_PATH}/xml2-config.in ${CMAKE_CURRENT_BINARY_DIR}/xml2-config IMMEDIATE @ONLY)
+configure_file(${CMAKE_MODULE_PATH}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h IMMEDIATE @ONLY)
 
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/include/ )
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} )
+include_directories ( ${CMAKE_CURRENT_BINARY_DIR}/include/ )
 include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
 
 set(PUBLIC_HDRS
-    ${CMAKE_CURRENT_BINARY_DIR}/libxml/xmlversion.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include/libxml/xmlversion.h
+    libxml.h
 )
 
 set(PRIVATE_HDRS
-
+    include/libxml/c14n.h
+    include/libxml/catalog.h
+    include/libxml/chvalid.h
+    include/libxml/debugXML.h
+    include/libxml/dict.h
+    include/libxml/DOCBparser.h
+    include/libxml/encoding.h
+    include/libxml/entities.h
+    include/libxml/globals.h
+    include/libxml/hash.h
+    include/libxml/HTMLparser.h
+    include/libxml/HTMLtree.h
+    include/libxml/list.h
+    include/libxml/nanoftp.h
+    include/libxml/nanohttp.h
+    include/libxml/parser.h
+    include/libxml/parserInternals.h
+    include/libxml/pattern.h
+    include/libxml/relaxng.h
+    include/libxml/SAX.h
+    include/libxml/SAX2.h
+    include/libxml/schemasInternals.h
+    include/libxml/threads.h
+    include/libxml/tree.h
+    include/libxml/uri.h
+    include/libxml/valid.h
+    include/libxml/xinclude.h
+    include/libxml/xlink.h
+    include/libxml/xmlautomata.h
+    include/libxml/xmlerror.h
+    include/libxml/xmlexports.h
+    include/libxml/xmlIO.h
+    include/libxml/xmlmemory.h
+    include/libxml/xmlmodule.h
+    include/libxml/xmlreader.h
+    include/libxml/xmlregexp.h
+    include/libxml/xmlsave.h
+    include/libxml/xmlschemas.h
+    include/libxml/xmlschemastypes.h
+    include/libxml/xmlstring.h
+    include/libxml/xmlunicode.h		
+    include/libxml/xmlwriter.h
+    include/libxml/xpath.h
+    include/libxml/xpathInternals.h
+    include/libxml/xpointer.h
+    triodef.h
+    trionan.h
+    # include/win32config.h wince stuf
+    include/wsockcompat.h	
 )
 
 set(SRCS
-
+    c14n.c
+    catalog.c
+    chvalid.c
+    debugXML.c
+    dict.c
+    DOCBparser.c
+    encoding.c
+    entities.c
+    error.c
+    globals.c
+    hash.c
+    HTMLparser.c
+    HTMLtree.c
+    legacy.c
+    list.c
+    nanoftp.c
+    nanohttp.c
+    parser.c
+    parserInternals.c
+    pattern.c
+    relaxng.c
+    SAX2.c
+    SAX.c
+    threads.c
+    tree.c
+    uri.c
+    valid.c
+    xinclude.c
+    xlink.c
+    xmlIO.c
+    xmlmemory.c
+    xmlreader.c
+    xmlregexp.c
+    xmlsave.c
+    xmlschemas.c
+    xmlschemastypes.c
+    xmlunicode.c
+    xmlwriter.c
+    xpath.c
+    xpointer.c
+    xmlstring.c
 )
-
 
 message(STATUS "libxml2 version ${VERSION}")    
 
@@ -139,9 +235,9 @@ endif()
 if(UNIX)
     # On unix-like platforms the library is almost always called libxml2
     set_target_properties(${LIB_NAME} PROPERTIES OUTPUT_NAME xml2)
-    if(NOT APPLE AND BUILD_SHARED_LIBS)
-        set_target_properties(${LIB_NAME} PROPERTIES LINK_FLAGS "-Wl,--version-script,\"${CMAKE_CURRENT_SOURCE_DIR}/libxml2.map\"")
-    endif()
+    #if(NOT APPLE AND BUILD_SHARED_LIBS)
+    #    set_target_properties(${LIB_NAME} PROPERTIES LINK_FLAGS "-Wl,--version-script,\"${CMAKE_CURRENT_SOURCE_DIR}/libxml2.map\"")
+    #endif()
 endif()
 
 if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )

@@ -308,6 +308,13 @@ check_c_source_compiles("
     int main(void) {va_list ap1, ap2; a(&ap1); ap2 = (va_list) ap1; return 0; }
     " VA_LIST_IS_ARRAY)
     
-    
-    
-    
+set(PACKAGE ${PROJECT_NAME})
+set(PACKAGE_NAME "lib${PACKAGE}")
+set(PACKAGE_VERSION ${VERSION})
+set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION})
+
+configure_file(${CMAKE_MODULE_PATH}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h IMMEDIATE @ONLY)
+configure_file(${CMAKE_MODULE_PATH}/xmlversion.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/libxml/xmlversion.h IMMEDIATE @ONLY )
+if(UNIX)
+    configure_file(${CMAKE_MODULE_PATH}/xml2-config.in ${CMAKE_CURRENT_BINARY_DIR}/xml2-config IMMEDIATE @ONLY)
+endif()

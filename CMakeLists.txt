@@ -26,7 +26,8 @@
 
 cmake_minimum_required(VERSION 2.8.10 FATAL_ERROR)
 
-project(xml2 C)
+set(PROJECT_NAME "xml2")
+project(${PROJECT_NAME} C)
 
 # some init settings
 set(CMAKE_COLOR_MAKEFILE ON)
@@ -83,8 +84,6 @@ elseif(WIN32)
     list(APPEND TARGET_LINK_LIB Ws2_32.lib Secur32.lib)
 endif()        
 
-include(configure)
-
 include(find_anyproject)
 
 if(WITH_THREADS)
@@ -99,10 +98,9 @@ find_anyproject(ZLIB)
 find_anyproject(ICONV)
 find_anyproject(LZMA)
 
-configure_file(${CMAKE_MODULE_PATH}/xmlversion.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/libxml/xmlversion.h IMMEDIATE @ONLY )
+include(configure)
+
 configure_file(${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake IMMEDIATE @ONLY)
-configure_file(${CMAKE_MODULE_PATH}/xml2-config.in ${CMAKE_CURRENT_BINARY_DIR}/xml2-config IMMEDIATE @ONLY)
-configure_file(${CMAKE_MODULE_PATH}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h IMMEDIATE @ONLY)
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/include/ )
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} )
@@ -210,15 +208,15 @@ set(SRCS
     xmlstring.c
 )
 
-message(STATUS "libxml2 version ${VERSION}")    
+message(STATUS "${PROJECT_NAME} version ${VERSION}")    
 
 if(BUILD_SHARED_LIBS)
-    set(LIB_NAME xml2)
+    set(LIB_NAME ${PROJECT_NAME})
     add_library(${LIB_NAME} SHARED ${SRCS} ${PUBLIC_HDRS} ${PRIVATE_HDRS})
     set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL XML2_DLL)
     set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
 else()    
-    set(LIB_NAME xml2static)
+    set(LIB_NAME ${PROJECT_NAME}static)
     add_library(${LIB_NAME} STATIC ${SRCS} ${PUBLIC_HDRS} ${PRIVATE_HDRS})
     set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
 endif()   
@@ -233,8 +231,8 @@ if(NOT CYGWIN)
 endif()
 
 if(UNIX)
-    # On unix-like platforms the library is almost always called libxml2
-    set_target_properties(${LIB_NAME} PROPERTIES OUTPUT_NAME xml2)
+    # On unix-like platforms the library is almost always called lib${PROJECT_NAME}
+    set_target_properties(${LIB_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
     #if(NOT APPLE AND BUILD_SHARED_LIBS)
     #    set_target_properties(${LIB_NAME} PROPERTIES LINK_FLAGS "-Wl,--version-script,\"${CMAKE_CURRENT_SOURCE_DIR}/libxml2.map\"")
     #endif()

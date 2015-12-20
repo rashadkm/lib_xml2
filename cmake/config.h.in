@@ -1,98 +1,98 @@
 /* Define to 1 if you have the <ansidecl.h> header file. */
-#cmakedefine HAVE_ANSIDECL_H
+#cmakedefine HAVE_ANSIDECL_H 1
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
-#cmakedefine HAVE_ARPA_INET_H
+#cmakedefine HAVE_ARPA_INET_H 1
 
 /* Define to 1 if you have the <arpa/nameser.h> header file. */
-#cmakedefine HAVE_ARPA_NAMESER_H
+#cmakedefine HAVE_ARPA_NAMESER_H 1
 
 /* Whether struct sockaddr::__ss_family exists */
 #cmakedefine HAVE_BROKEN_SS_FAMILY
 
 /* Define to 1 if you have the `class' function. */
-#cmakedefine01 HAVE_CLASS
+#cmakedefine01 HAVE_CLASS 1
 
 /* Define to 1 if you have the <ctype.h> header file. */
-#cmakedefine HAVE_CTYPE_H
+#cmakedefine HAVE_CTYPE_H 1
 
 /* Define to 1 if you have the <dirent.h> header file. */
-#cmakedefine HAVE_DIRENT_H
+#cmakedefine HAVE_DIRENT_H 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#cmakedefine HAVE_DLFCN_H       /* Locally emulated. */
+#cmakedefine HAVE_DLFCN_H  1      /* Locally emulated. */
 
 /* Have dlopen based dso */
-#cmakedefine01 HAVE_DLOPEN        /* Locally emulated. */
+#cmakedefine HAVE_DLOPEN        /* Locally emulated. */
 
 /* Define to 1 if you have the <dl.h> header file. */
-#cmakedefine HAVE_DL_H
+#cmakedefine HAVE_DL_H 1
 
 /* Define to 1 if you have the <errno.h> header file. */
-#cmakedefine HAVE_ERRNO_H
+#cmakedefine HAVE_ERRNO_H 1
 
 /* Define to 1 if you have the <fcntl.h> header file. */
-#cmakedefine HAVE_FCNTL_H 
+#cmakedefine HAVE_FCNTL_H  1
 
 /* Define to 1 if you have the `finite' function. */
-#cmakedefine HAVE_FINITE
+#cmakedefine HAVE_FINITE 1
 
 /* Define to 1 if you have the <float.h> header file. */
-#cmakedefine HAVE_FLOAT_H 
+#cmakedefine HAVE_FLOAT_H 1 
 
 /* Define to 1 if you have the `fpclass' function. */
-#cmakedefine01 HAVE_FPCLASS
+#cmakedefine HAVE_FPCLASS 1
 
 /* Define to 1 if you have the `fprintf' function. */
-#cmakedefine01 HAVE_FPRINTF                     /* Use trio. */
+#cmakedefine HAVE_FPRINTF 1                    /* Use trio. */
 
 /* Define to 1 if you have the `fp_class' function. */
-#cmakedefine01 HAVE_FP_CLASS
+#cmakedefine HAVE_FP_CLASS 1
 
 /* Define to 1 if you have the <fp_class.h> header file. */
-#cmakedefine01 HAVE_FP_CLASS_H
+#cmakedefine HAVE_FP_CLASS_H 1
 
 /* Define to 1 if you have the `ftime' function. */
-#cmakedefine01 HAVE_FTIME
+#cmakedefine HAVE_FTIME 1
 
 /* Define if getaddrinfo is there */
-#cmakedefine01 HAVE_GETADDRINFO
+#cmakedefine HAVE_GETADDRINFO 1
 
 /* Define to 1 if you have the `gettimeofday' function. */
-#cmakedefine01 HAVE_GETTIMEOFDAY
+#cmakedefine HAVE_GETTIMEOFDAY 1
 
 /* Define to 1 if you have the <ieeefp.h> header file. */
-#cmakedefine HAVE_IEEEFP_H
+#cmakedefine HAVE_IEEEFP_H 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#cmakedefine HAVE_INTTYPES_H
+#cmakedefine HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `isascii' function. */
-#cmakedefine01 HAVE_ISASCII
+#cmakedefine HAVE_ISASCII 1
 
 /* Define if isinf is there */
-#cmakedefine01 HAVE_ISINF
+#cmakedefine HAVE_ISINF
 
 /* Define if isnan is there */
-#cmakedefine01 HAVE_ISNAN
+#cmakedefine HAVE_ISNAN
 
 /* Define to 1 if you have the `isnand' function. */
-#cmakedefine01 HAVE_ISNAND
+#cmakedefine HAVE_ISNAND
 
 /* Define if history library is there (-lhistory) */
-#cmakedefine01 HAVE_LIBHISTORY
+#cmakedefine HAVE_LIBHISTORY
 
 /* Define if pthread library is there (-lpthread) */
-#cmakedefine01 HAVE_LIBPTHREAD
+#cmakedefine HAVE_LIBPTHREAD
 
 /* Define if readline library is there (-lreadline) */
-#cmakedefine01 HAVE_LIBREADLINE
+#cmakedefine HAVE_LIBREADLINE
 
 /* Define to 1 if you have the <limits.h> header file. */
-#cmakedefine HAVE_LIMITS_H
+#cmakedefine HAVE_LIMITS_H 1
 
 /* Define to 1 if you have the `localtime' function. */
-#cmakedefine01 HAVE_LOCALTIME
+#cmakedefine HAVE_LOCALTIME 1
 
 /* Define to 1 if you have the <lzma.h> header file. */
 #cmakedefine WITH_LZMA
@@ -102,19 +102,19 @@
 #endif
 
 /* Define to 1 if you have the <malloc.h> header file. */
-#cmakedefine HAVE_MALLOC_H
+#cmakedefine HAVE_MALLOC_H 1
 
 /* Define to 1 if you have the <math.h> header file. */
-#cmakedefine HAVE_MATH_H
+#cmakedefine HAVE_MATH_H 1
 
 /* Define to 1 if you have the <memory.h> header file. */
-#cmakedefine HAVE_MEMORY_H
+#cmakedefine HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mmap' function. */
-#cmakedefine01 HAVE_MMAP
+#cmakedefine HAVE_MMAP 1
 
 /* Define to 1 if you have the `munmap' function. */
-#cmakedefine01 HAVE_MUNMAP
+#cmakedefine HAVE_MUNMAP 1
 
 /* mmap() is no good without munmap() */
 #if defined(HAVE_MMAP) && !defined(HAVE_MUNMAP)
@@ -122,147 +122,147 @@
 #endif
 
 /* Define to 1 if you have the <nan.h> header file. */
-#cmakedefine HAVE_NAN_H
+#cmakedefine HAVE_NAN_H 1
 
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
-#cmakedefine HAVE_NDIR_H
+#cmakedefine HAVE_NDIR_H 1
 
 /* Define to 1 if you have the <netdb.h> header file. */
-#cmakedefine HAVE_NETDB_H
+#cmakedefine HAVE_NETDB_H 1
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
-#cmakedefine HAVE_NETINET_IN_H
+#cmakedefine HAVE_NETINET_IN_H 1
 
 /* Define to 1 if you have the <poll.h> header file. */
 #cmakedefine HAVE_POLL_H
 
 /* Define to 1 if you have the `printf' function. */
-#cmakedefine01 HAVE_PRINTF                      /* Use trio. */
+#cmakedefine HAVE_PRINTF  1                    /* Use trio. */
 
 /* Define to 1 if you have the `vprintf' function. */
-#cmakedefine01 HAVE_VPRINTF                     /* Use trio. */
+#cmakedefine HAVE_VPRINTF 1                    /* Use trio. */
 
 /* Define if <pthread.h> is there */
 #cmakedefine HAVE_PTHREAD_H
 
 /* Define to 1 if you have the `putenv' function. */
-#cmakedefine01 HAVE_PUTENV 
+#cmakedefine HAVE_PUTENV 1
 
 /* Define to 1 if you have the `rand' function. */
-#cmakedefine01 HAVE_RAND 
+#cmakedefine HAVE_RAND 1
 
 /* Define to 1 if you have the `rand_r' function. */
-#cmakedefine01 HAVE_RAND_R 
+#cmakedefine HAVE_RAND_R 1
 
 /* Define to 1 if you have the <resolv.h> header file. */
-#cmakedefine HAVE_RESOLV_H 
+#cmakedefine HAVE_RESOLV_H 1
 
 /* Have shl_load based dso */
-#cmakedefine01 HAVE_SHLLOAD
+#cmakedefine HAVE_SHLLOAD
 
 /* Define to 1 if you have the `signal' function. */
-#cmakedefine01 HAVE_SIGNAL
+#cmakedefine HAVE_SIGNAL 1
 
 /* Define to 1 if you have the <signal.h> header file. */
-#cmakedefine HAVE_SIGNAL_H  
+#cmakedefine HAVE_SIGNAL_H  1
 
 /* Define to 1 if you have the `snprintf' function. */
-#cmakedefine01 HAVE_SNPRINTF                    /* Use trio. */
+#cmakedefine HAVE_SNPRINTF 1                   /* Use trio. */
 
 /* Define to 1 if you have the `sprintf' function. */
-#cmakedefine01 HAVE_SPRINTF                     /* Use trio. */
+#cmakedefine HAVE_SPRINTF 1                    /* Use trio. */
 
 /* Define to 1 if you have the `srand' function. */
-#cmakedefine01 HAVE_SRAND 
+#cmakedefine HAVE_SRAND 1
 
 /* Define to 1 if you have the `scanf' function. */
-#cmakedefine01 HAVE_SCANF                       /* Use trio. */
+#cmakedefine HAVE_SCANF 1                      /* Use trio. */
 
 /* Define to 1 if you have the `fscanf' function. */
-#cmakedefine01 HAVE_FSCANF                      /* Use trio. */
+#cmakedefine HAVE_FSCANF 1                     /* Use trio. */
 
 /* Define to 1 if you have the `sscanf' function. */
-#cmakedefine01 HAVE_SSCANF                      /* Use trio. */
+#cmakedefine HAVE_SSCANF 1                     /* Use trio. */
 
 /* Define to 1 if you have the `stat' function. */
-#cmakedefine01 HAVE_STAT 
+#cmakedefine HAVE_STAT 1
 
 /* Define to 1 if you have the <stdarg.h> header file. */
-#cmakedefine HAVE_STDARG_H        /* Overloaded */
+#cmakedefine HAVE_STDARG_H 1       /* Overloaded */
 
 /* Define to 1 if you have the <stdint.h> header file. */
-#cmakedefine HAVE_STDINT_H 
+#cmakedefine HAVE_STDINT_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
-#cmakedefine HAVE_STDLIB_H 
+#cmakedefine HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the `strdup' function. */
-#cmakedefine01 HAVE_STRDUP 
+#cmakedefine HAVE_STRDUP 1
 
 /* Define to 1 if you have the `strerror' function. */
-#cmakedefine01 HAVE_STRERROR 
+#cmakedefine HAVE_STRERROR 1
 
 /* Define to 1 if you have the `strftime' function. */
-#cmakedefine01 HAVE_STRFTIME 
+#cmakedefine HAVE_STRFTIME 1 
 
 /* Define to 1 if you have the <strings.h> header file. */
-#cmakedefine HAVE_STRINGS_H
+#cmakedefine HAVE_STRINGS_H 1
 
 /* Define to 1 if you have the <string.h> header file. */
-#cmakedefine HAVE_STRING_H 
+#cmakedefine HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strndup' function. */
-#cmakedefine01 HAVE_STRNDUP
+#cmakedefine HAVE_STRNDUP 1
 
 /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
    */
-#cmakedefine HAVE_SYS_DIR_H
+#cmakedefine HAVE_SYS_DIR_H 1
 
 /* Define to 1 if you have the <sys/mman.h> header file. */
-#cmakedefine HAVE_SYS_MMAN_H 
+#cmakedefine HAVE_SYS_MMAN_H 1
 
 /* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
    */
-#cmakedefine HAVE_SYS_NDIR_H
+#cmakedefine HAVE_SYS_NDIR_H 1
 
 /* Define to 1 if you have the <sys/select.h> header file. */
-#cmakedefine HAVE_SYS_SELECT_H
+#cmakedefine HAVE_SYS_SELECT_H 1
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
-#cmakedefine HAVE_SYS_SOCKET_H 
+#cmakedefine HAVE_SYS_SOCKET_H 1
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-#cmakedefine HAVE_SYS_STAT_H 
+#cmakedefine HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/timeb.h> header file. */
-#cmakedefine HAVE_SYS_TIMEB_H 
+#cmakedefine HAVE_SYS_TIMEB_H 1
 
 /* Define to 1 if you have the <sys/time.h> header file. */
-#cmakedefine HAVE_SYS_TIME_H 
+#cmakedefine HAVE_SYS_TIME_H 1
 
 /* Define to 1 if you have the <sys/types.h> header file. */
-#cmakedefine HAVE_SYS_TYPES_H 
+#cmakedefine HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have the `time' function. */
-#cmakedefine01 HAVE_TIME 
+#cmakedefine HAVE_TIME 1
 
 /* Define to 1 if you have the <time.h> header file. */
-#cmakedefine HAVE_TIME_H 
+#cmakedefine HAVE_TIME_H 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #cmakedefine HAVE_UNISTD_H 
 
 /* Whether va_copy() is available */
-#cmakedefine01 HAVE_VA_COPY
+#cmakedefine HAVE_VA_COPY 
 
 /* Define to 1 if you have the `vfprintf' function. */
-#cmakedefine01 HAVE_VFPRINTF                    /* Use trio. */
+#cmakedefine HAVE_VFPRINTF 1                   /* Use trio. */
 
 /* Define to 1 if you have the `vsnprintf' function. */
-#cmakedefine01 HAVE_VSNPRINTF                   /* Use trio. */
+#cmakedefine HAVE_VSNPRINTF 1                  /* Use trio. */
 
 /* Define to 1 if you have the `vsprintf' function. */
-#cmakedefine01 HAVE_VSPRINTF                    /* Use trio. */
+#cmakedefine HAVE_VSPRINTF 1                   /* Use trio. */
 
 /* Define to 1 if you have the <zlib.h> header file. */
 /* Actually dependent on the compilation script. */
@@ -276,10 +276,10 @@
 #endif
 
 /* Define to 1 if you have the `_stat' function. */
-#cmakedefine01 HAVE__STAT
+#cmakedefine HAVE__STAT 1
 
 /* Whether __va_copy() is available */
-#cmakedefine01 HAVE___VA_COPY
+#cmakedefine HAVE___VA_COPY
 
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST "@ICONV_CONST@"
@@ -289,34 +289,34 @@
 #cmakedefine LT_OBJDIR "@LT_OBJDIR@"
 
 /* Name of package */
-#define PACKAGE                 "libxml2"
+#cmakedefine PACKAGE                 "@PACKAGE@"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT       ""
+#cmakedefine PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME            "libxml2"
+#cmakedefine PACKAGE_NAME "@PACKAGE_NAME@"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING          "libxml2 @VERSION@"
+#cmakedefine PACKAGE_STRING "@PACKAGE_STRING@"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME         ""
+#cmakedefine PACKAGE_TARNAME "@PACKAGE_TARNAME@"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL             ""
+#cmakedefine PACKAGE_URL "@PACKAGE_URL@"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION         "@VERSION@"
+#cmakedefine PACKAGE_VERSION "@PACKAGE_VERSION@"
 
 /* Define to 1 if you have the ANSI C header files. */
-#cmakedefine01 STDC_HEADERS 
+#cmakedefine STDC_HEADERS 1
 
 /* Support for IPv6 */
 #cmakedefine SUPPORT_IP6
 
 /* Version number of package */
-#define VERSION                 "@VERSION@"
+#cmakedefine VERSION                 "@VERSION@"
 
 /* Determine what socket length (socklen_t) data type is */
 #cmakedefine HAVE_SOCKLEN_T
@@ -330,7 +330,7 @@
 //#undef _UINT32_T
 
 /* Using the Win32 Socket implementation */
-#cmakedefine01 _WINSOCKAPI_
+#cmakedefine _WINSOCKAPI_
 
 /* ss_family is not defined here, use __ss_family instead */
 //#undef ss_family
@@ -356,5 +356,5 @@
 #endif
 
 /* Define if va_list is an array type */
-#cmakedefine01 VA_LIST_IS_ARRAY 
+#cmakedefine VA_LIST_IS_ARRAY 
 

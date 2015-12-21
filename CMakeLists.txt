@@ -209,7 +209,9 @@ set(SRCS
     xmlstring.c
 )
 
-message(STATUS "${PROJECT_NAME} version ${VERSION}")    
+include(util)
+report_version(${PROJECT_NAME} ${VERSION})    
+    
 
 if(UNIX)
 #    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")

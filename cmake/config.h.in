@@ -8,7 +8,7 @@
 #cmakedefine HAVE_ARPA_NAMESER_H 1
 
 /* Whether struct sockaddr::__ss_family exists */
-#cmakedefine HAVE_BROKEN_SS_FAMILY
+#cmakedefine HAVE_BROKEN_SS_FAMILY 1
 
 /* Define to 1 if you have the `class' function. */
 #cmakedefine01 HAVE_CLASS 1
@@ -23,7 +23,7 @@
 #cmakedefine HAVE_DLFCN_H  1      /* Locally emulated. */
 
 /* Have dlopen based dso */
-#cmakedefine HAVE_DLOPEN        /* Locally emulated. */
+#cmakedefine HAVE_DLOPEN  1      /* Locally emulated. */
 
 /* Define to 1 if you have the <dl.h> header file. */
 #cmakedefine HAVE_DL_H 1
@@ -71,22 +71,22 @@
 #cmakedefine HAVE_ISASCII 1
 
 /* Define if isinf is there */
-#cmakedefine HAVE_ISINF
+#cmakedefine HAVE_ISINF 1
 
 /* Define if isnan is there */
-#cmakedefine HAVE_ISNAN
+#cmakedefine HAVE_ISNAN 1
 
 /* Define to 1 if you have the `isnand' function. */
-#cmakedefine HAVE_ISNAND
+#cmakedefine HAVE_ISNAND 1
 
 /* Define if history library is there (-lhistory) */
-#cmakedefine HAVE_LIBHISTORY
+#cmakedefine HAVE_LIBHISTORY 1
 
 /* Define if pthread library is there (-lpthread) */
-#cmakedefine HAVE_LIBPTHREAD
+#cmakedefine HAVE_LIBPTHREAD 1
 
 /* Define if readline library is there (-lreadline) */
-#cmakedefine HAVE_LIBREADLINE
+#cmakedefine HAVE_LIBREADLINE 1
 
 /* Define to 1 if you have the <limits.h> header file. */
 #cmakedefine HAVE_LIMITS_H 1
@@ -95,8 +95,8 @@
 #cmakedefine HAVE_LOCALTIME 1
 
 /* Define to 1 if you have the <lzma.h> header file. */
-#cmakedefine WITH_LZMA
-#ifdef WITH_LZMA
+#cmakedefine WITH_LibLZMA
+#ifdef WITH_LibLZMA
     #define HAVE_LZMA_H 1
     #define HAVE_LIBLZMA 1
 #endif
@@ -134,7 +134,7 @@
 #cmakedefine HAVE_NETINET_IN_H 1
 
 /* Define to 1 if you have the <poll.h> header file. */
-#cmakedefine HAVE_POLL_H
+#cmakedefine HAVE_POLL_H 1
 
 /* Define to 1 if you have the `printf' function. */
 #cmakedefine HAVE_PRINTF  1                    /* Use trio. */
@@ -143,7 +143,7 @@
 #cmakedefine HAVE_VPRINTF 1                    /* Use trio. */
 
 /* Define if <pthread.h> is there */
-#cmakedefine HAVE_PTHREAD_H
+#cmakedefine HAVE_PTHREAD_H 1
 
 /* Define to 1 if you have the `putenv' function. */
 #cmakedefine HAVE_PUTENV 1
@@ -158,7 +158,7 @@
 #cmakedefine HAVE_RESOLV_H 1
 
 /* Have shl_load based dso */
-#cmakedefine HAVE_SHLLOAD
+#cmakedefine HAVE_SHLLOAD 1
 
 /* Define to 1 if you have the `signal' function. */
 #cmakedefine HAVE_SIGNAL 1
@@ -250,10 +250,10 @@
 #cmakedefine HAVE_TIME_H 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
-#cmakedefine HAVE_UNISTD_H 
+#cmakedefine HAVE_UNISTD_H 1
 
 /* Whether va_copy() is available */
-#cmakedefine HAVE_VA_COPY 
+#cmakedefine HAVE_VA_COPY 1
 
 /* Define to 1 if you have the `vfprintf' function. */
 #cmakedefine HAVE_VFPRINTF 1                   /* Use trio. */
@@ -279,10 +279,10 @@
 #cmakedefine HAVE__STAT 1
 
 /* Whether __va_copy() is available */
-#cmakedefine HAVE___VA_COPY
+#cmakedefine HAVE___VA_COPY 1
 
 /* Define as const if the declaration of iconv() needs const. */
-#define ICONV_CONST "@ICONV_CONST@"
+#define ICONV_CONST @ICONV_CONST@
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
@@ -313,13 +313,13 @@
 #cmakedefine STDC_HEADERS 1
 
 /* Support for IPv6 */
-#cmakedefine SUPPORT_IP6
+#cmakedefine SUPPORT_IP6 1
 
 /* Version number of package */
 #cmakedefine VERSION                 "@VERSION@"
 
 /* Determine what socket length (socklen_t) data type is */
-#cmakedefine HAVE_SOCKLEN_T
+#cmakedefine HAVE_SOCKLEN_T 1
 #ifdef HAVE_SOCKLEN_T
 #define XML_SOCKLEN_T           socklen_t
 #endif
@@ -330,7 +330,7 @@
 //#undef _UINT32_T
 
 /* Using the Win32 Socket implementation */
-#cmakedefine _WINSOCKAPI_
+#cmakedefine _WINSOCKAPI_ 1
 
 /* ss_family is not defined here, use __ss_family instead */
 //#undef ss_family
@@ -340,7 +340,7 @@
 //#undef uint32_t
 
 /* Type cast for the send() function 2nd arg */
-#cmakedefine HAVE_SEND_ARG2_CAST
+#cmakedefine HAVE_SEND_ARG2_CAST 1
 #ifdef HAVE_SEND_ARG2_CAST
     #define SEND_ARG2_CAST          /**/
 #else
@@ -348,7 +348,7 @@
 #endif
 
 /* Type cast for the gethostbyname() argument */
-#cmakedefine HAVE_GETHOSTBYNAME_ARG_CAST
+#cmakedefine HAVE_GETHOSTBYNAME_ARG_CAST 1
 #ifdef HAVE_GETHOSTBYNAME_ARG_CAST
     #define GETHOSTBYNAME_ARG_CAST  /**/
 #else
@@ -356,5 +356,5 @@
 #endif
 
 /* Define if va_list is an array type */
-#cmakedefine VA_LIST_IS_ARRAY 
+#cmakedefine VA_LIST_IS_ARRAY  1
 

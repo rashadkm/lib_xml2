@@ -96,7 +96,7 @@ endif()
 
 find_anyproject(ZLIB)
 find_anyproject(ICONV)
-find_anyproject(LZMA)
+find_anyproject(LibLZMA)
 
 include(configure)
 
@@ -113,6 +113,7 @@ set(PUBLIC_HDRS
 )
 
 set(PRIVATE_HDRS
+#    ${CMAKE_CURRENT_BINARY_DIR}/config.h
     include/libxml/c14n.h
     include/libxml/catalog.h
     include/libxml/chvalid.h
@@ -209,6 +210,10 @@ set(SRCS
 )
 
 message(STATUS "${PROJECT_NAME} version ${VERSION}")    
+
+if(UNIX)
+#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
+endif()
 
 if(BUILD_SHARED_LIBS)
     set(LIB_NAME ${PROJECT_NAME})

@@ -11,7 +11,7 @@
 #cmakedefine HAVE_BROKEN_SS_FAMILY 1
 
 /* Define to 1 if you have the `class' function. */
-#cmakedefine01 HAVE_CLASS 1
+#cmakedefine HAVE_CLASS 1
 
 /* Define to 1 if you have the <ctype.h> header file. */
 #cmakedefine HAVE_CTYPE_H 1
@@ -284,6 +284,10 @@
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST @ICONV_CONST@
 
+#if defined(_MSC_VER) && defined(NEED_SOCKETS)
+#include <wsockcompat.h>
+#endif
+
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #cmakedefine LT_OBJDIR "@LT_OBJDIR@"
@@ -331,6 +335,24 @@
 
 /* Using the Win32 Socket implementation */
 #cmakedefine _WINSOCKAPI_ 1
+
+#if defined(_MSC_VER)
+#define mkdir(p,m) _mkdir(p)
+#define snprintf _snprintf
+#if _MSC_VER < 1500
+#define vsnprintf(b,c,f,a) _vsnprintf(b,c,f,a)
+#endif
+#elif defined(__MINGW32__)
+#define mkdir(p,m) _mkdir(p)
+#endif
+
+/* Threading API to use should be specified here for compatibility reasons.
+   This is however best specified on the compiler's command-line. */
+#if defined(LIBXML_THREAD_ENABLED)
+#if !defined(HAVE_PTHREAD_H) && !defined(HAVE_WIN32_THREADS) && !defined(_WIN32_WCE)
+#define HAVE_WIN32_THREADS
+#endif
+#endif
 
 /* ss_family is not defined here, use __ss_family instead */
 //#undef ss_family

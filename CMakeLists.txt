@@ -74,6 +74,8 @@ option(WITH_MODULES "Add the dynamic modules support" ON)
 option(WITH_WALKER "Enable xmlDocWalker api" ON)
 option(WITH_PYTHON "Build Python bindings" OFF)
 
+include(find_anyproject)
+
 if(UNIX)
     set(MODULE_EXTENSION ".so")
 elseif(WIN32)
@@ -81,9 +83,10 @@ elseif(WIN32)
     set(THREADS_W32 TRUE)
     add_definitions(-DHAVE_WIN32_THREADS -DWIN32)
     list(APPEND TARGET_LINK_LIB Ws2_32.lib Secur32.lib)
+    if (MSVC)
+        add_definitions (-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -D_CRT_NON_CONFORMING_SWPRINTFS -D_CRT_SECURE_NO_DEPRECATE)
+    endif()
 endif()        
-
-include(find_anyproject)
 
 if(WITH_THREADS)
   find_package(Threads REQUIRED)
@@ -112,7 +115,7 @@ set(PUBLIC_HDRS
 )
 
 set(PRIVATE_HDRS
-#    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
     include/libxml/c14n.h
     include/libxml/catalog.h
     include/libxml/chvalid.h
@@ -160,14 +163,14 @@ set(PRIVATE_HDRS
     include/libxml/xpointer.h
     triodef.h
     trionan.h
-    # include/win32config.h wince stuf
-    include/wsockcompat.h	
+    xzlib.h
 )
 
 set(SRCS
     c14n.c
     catalog.c
     chvalid.c
+    buf.c
     debugXML.c
     dict.c
     DOCBparser.c
@@ -206,7 +209,16 @@ set(SRCS
     xpath.c
     xpointer.c
     xmlstring.c
+    xzlib.c
 )
+
+if(WIN32)
+    set(SRCS ${SRCS}
+        # include/win32config.h wince stuf
+        include/wsockcompat.h
+    )	
+    
+endif()
 
 include(util)
 report_version(${PROJECT_NAME} ${VERSION})    

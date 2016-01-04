@@ -88,7 +88,9 @@ XMLPUBFUN void XMLCALL xmlCheckVersion(int version);
 #ifdef WITH_THREADS
 #if defined(_REENTRANT) || defined(__MT__) || \
     (defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L))
-#define LIBXML_THREAD_ENABLED
+#ifndef LIBXML_THREAD_ENABLED
+    #define LIBXML_THREAD_ENABLED
+#endif //     LIBXML_THREAD_ENABLED
 #endif
 #endif
 
@@ -127,7 +129,7 @@ XMLPUBFUN void XMLCALL xmlCheckVersion(int version);
  *
  * Whether the push parsing interfaces are configured in
  */
-#cmakedefine WITH_OUTPUT 1  
+#cmakedefine WITH_PUSH 1  
 #ifdef WITH_PUSH
 #define LIBXML_PUSH_ENABLED
 #endif

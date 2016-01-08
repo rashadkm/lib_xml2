@@ -47,6 +47,16 @@ function(check_updates file_path update_period check)
     endif()
 endfunction()
 
+function(color_message text)
+
+    string(ASCII 27 Esc)
+    set(BoldGreen   "${Esc}[1;32m")
+    set(ColourReset "${Esc}[m")
+        
+    message(STATUS "${BoldGreen}${text}${ColourReset}")
+    
+endfunction() 
+
 function(find_extproject name)
   
     include (CMakeParseArguments)
@@ -128,12 +138,14 @@ function(find_extproject name)
     endif()
    
     if(NOT EXISTS "${EP_BASE}/Source/${name}_EP/.git")
+        color_message("Git clone ${repo_name} ...")
         execute_process(COMMAND ${GIT_EXECUTABLE} clone ${EP_URL}/${repo_name} ${name}_EP
            WORKING_DIRECTORY  ${EP_BASE}/Source)
    
     else() 
         check_updates(${EP_BASE}/Stamp/${name}_EP/${name}_EP-gitpull.txt ${PULL_UPDATE_PERIOD} CHECK_UPDATES)
         if(CHECK_UPDATES)
+            color_message("Git pull ${repo_name} ...")
             execute_process(COMMAND ${GIT_EXECUTABLE} pull
                WORKING_DIRECTORY  ${EP_BASE}/Source/${name}_EP)
         endif()

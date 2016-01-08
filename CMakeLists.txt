@@ -110,12 +110,11 @@ include_directories ( ${CMAKE_CURRENT_BINARY_DIR}/include/ )
 include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
 
 set(PUBLIC_HDRS
-    ${CMAKE_CURRENT_BINARY_DIR}/include/libxml/xmlversion.h
     libxml.h
 )
 
-set(PRIVATE_HDRS
-    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+set(PUBLIC_HDRS_LIBXML2
+    ${CMAKE_CURRENT_BINARY_DIR}/include/libxml/xmlversion.h
     include/libxml/c14n.h
     include/libxml/catalog.h
     include/libxml/chvalid.h
@@ -161,6 +160,10 @@ set(PRIVATE_HDRS
     include/libxml/xpath.h
     include/libxml/xpathInternals.h
     include/libxml/xpointer.h
+)
+
+set(PRIVATE_HDRS
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
     triodef.h
     trionan.h
     xzlib.h
@@ -230,12 +233,12 @@ endif()
 
 if(BUILD_SHARED_LIBS)
     set(LIB_NAME ${PROJECT_NAME})
-    add_library(${LIB_NAME} SHARED ${SRCS} ${PUBLIC_HDRS} ${PRIVATE_HDRS})
+    add_library(${LIB_NAME} SHARED ${SRCS} ${PUBLIC_HDRS} ${PUBLIC_HDRS_LIBXML2} ${PRIVATE_HDRS})
     set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL XML2_DLL)
     set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
 else()    
     set(LIB_NAME ${PROJECT_NAME}static)
-    add_library(${LIB_NAME} STATIC ${SRCS} ${PUBLIC_HDRS} ${PRIVATE_HDRS})
+    add_library(${LIB_NAME} STATIC ${SRCS} ${PUBLIC_HDRS} ${PUBLIC_HDRS_LIBXML2} ${PRIVATE_HDRS})
     set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
 endif()   
 
@@ -264,5 +267,6 @@ if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
 endif()
 if(NOT SKIP_INSTALL_HEADERS AND NOT SKIP_INSTALL_ALL )
     install(FILES ${PUBLIC_HDRS} DESTINATION "${INSTALL_INC_DIR}")
+    install(FILES ${PUBLIC_HDRS_LIBXML2} DESTINATION "${INSTALL_INC_DIR}/libxml")
 endif()
 

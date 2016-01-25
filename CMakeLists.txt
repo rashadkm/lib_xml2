@@ -29,17 +29,28 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 project(xml2 C)
 
 # some init settings
-set(CMAKE_COLOR_MAKEFILE ON)
+#set(CMAKE_COLOR_MAKEFILE ON)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+option(BUILD_SHARED_LIBS  "Build shared libs." ON)
+
 # set path to additional CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE INTERNAL "Installation directory for executables" FORCE)
 set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE INTERNAL "Installation directory for libraries" FORCE)
 set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE INTERNAL "Installation directory for headers" FORCE)
+set(INSTALL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/lib/cmake" CACHE INTERNAL "Installation cmake files" FORCE)
+
 
 set(VERSION "2.9.3")
 set(LIBXML_VERSION_NUMBER 20903)
 set(LIBXML_VERSION_EXTRA "-GITCVE-2015-8242")
+set(LIB_NAME ${PROJECT_NAME})
+if(NOT BUILD_SHARED_LIBS)
+  set(LIB_NAME ${PROJECT_NAME}static)
+endif()   
 
 option(WITH_TRIO "Enable TRIO string manipulator" OFF)
 option(WITH_THREADS "Add multithread support" ON)
@@ -74,7 +85,8 @@ option(WITH_MODULES "Add the dynamic modules support" ON)
 option(WITH_WALKER "Enable xmlDocWalker api" ON)
 option(WITH_PYTHON "Build Python bindings" OFF)
 
-include(FindAnyProject)
+#include(FindAnyProject)
+include(SuperFind)
 
 if(UNIX)
     set(MODULE_EXTENSION ".so")
@@ -96,9 +108,18 @@ if(WITH_THREADS)
   endif()
 endif()
 
-find_anyproject(ZLIB)
-find_anyproject(ICONV)
-find_anyproject(LibLZMA)
+#find_anyproject(ZLIB)
+super_find_package(ZLIB)
+include_directories(${ZLIB_INCLUDE_DIR})
+
+#find_anyproject(ICONV)
+# super_find_package(ICONV REPO "lib_iconv")
+# include_directories(${ICONV_INCLUDE_DIR})
+
+#find_anyproject(LibLZMA)
+#super_find_package(LibLZMA REPO "lib_lzma" CMAKE_ARGS "-DCMAKE_C_FLAGS='-std=c99 -Wno-implicit-function-declaration'")
+super_find_package(LibLZMA REPO "lib_lzma")
+include_directories(${LibLZMA_INCLUDE_DIR})
 
 include(configure)
 
@@ -225,48 +246,105 @@ endif()
 
 include(util)
 report_version(${PROJECT_NAME} ${VERSION})    
-    
-
-if(UNIX)
-#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
-endif()
+  
+add_library(${LIB_NAME} ${SRCS} ${PUBLIC_HDRS} ${PUBLIC_HDRS_LIBXML2} ${PRIVATE_HDRS})
 
 if(BUILD_SHARED_LIBS)
-    set(LIB_NAME ${PROJECT_NAME})
-    add_library(${LIB_NAME} SHARED ${SRCS} ${PUBLIC_HDRS} ${PUBLIC_HDRS_LIBXML2} ${PRIVATE_HDRS})
-    set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL XML2_DLL)
-#    set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
-else()    
-    set(LIB_NAME ${PROJECT_NAME}static)
-    add_library(${LIB_NAME} STATIC ${SRCS} ${PUBLIC_HDRS} ${PUBLIC_HDRS_LIBXML2} ${PRIVATE_HDRS})
-#    set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
-endif()   
-
-target_link_extlibraries(${LIB_NAME}) 
-
-export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}-exports.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
-add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+  set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL XML2_DLL)
+endif()
 
 if(NOT CYGWIN)
-    set_target_properties(${LIB_NAME} PROPERTIES VERSION ${VERSION})
+  set_target_properties(${LIB_NAME} PROPERTIES VERSION ${VERSION})
 endif()
 
-if(UNIX)
-    # On unix-like platforms the library is almost always called lib${PROJECT_NAME}
-    set_target_properties(${LIB_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
-    #if(NOT APPLE AND BUILD_SHARED_LIBS)
-    #    set_target_properties(${LIB_NAME} PROPERTIES LINK_FLAGS "-Wl,--version-script,\"${CMAKE_CURRENT_SOURCE_DIR}/libxml2.map\"")
-    #endif()
+if(TARGET ZLIB)
+  add_dependencies(${LIB_NAME} ZLIB)
+endif()
+if(TARGET LibLZMA)
+  add_dependencies(${LIB_NAME} LibLZMA)
 endif()
 
-if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
-    install(TARGETS ${LIB_NAME} 
-        RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
-        ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
-        LIBRARY DESTINATION "${INSTALL_LIB_DIR}" )
+target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARIES} ${ZLIB_LIBRARIES}) 
+#target_link_extlibraries(${LIB_NAME})
+
+#set(CMAKE_CONFIG_NAME ${PROJECT_NAME})
+set(CMAKE_CONFIG_NAME "LibXml2")
+
+export(TARGETS ${LIB_NAME} FILE ${CMAKE_CONFIG_NAME}Targets.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
+ 
+install(TARGETS ${LIB_NAME}
+  EXPORT ${CMAKE_CONFIG_NAME}Targets
+  RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+  ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+  LIBRARY DESTINATION "${INSTALL_LIB_DIR}")
+
+add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+
+
+install(TARGETS ${LIB_NAME} 
+  RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+  ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" )
+
+install(FILES ${PUBLIC_HDRS} DESTINATION "${INSTALL_INC_DIR}")
+install(FILES ${PUBLIC_HDRS_LIBXML2} DESTINATION "${INSTALL_INC_DIR}/libxml")
+
+
+
+
+
+
+
+
+
+
+
+if(WIN32 AND NOT CYGWIN)
+  set(DEF_INSTALL_CMAKE_DIR cmake)
+else()
+  set(DEF_INSTALL_CMAKE_DIR lib/cmake/libxml2)
 endif()
-if(NOT SKIP_INSTALL_HEADERS AND NOT SKIP_INSTALL_ALL )
-    install(FILES ${PUBLIC_HDRS} DESTINATION "${INSTALL_INC_DIR}")
-    install(FILES ${PUBLIC_HDRS_LIBXML2} DESTINATION "${INSTALL_INC_DIR}/libxml")
+set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH
+  "Installation directory for CMake files")
+
+export(TARGETS ${LIB_NAME}
+  FILE "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_NAME}Targets.cmake")
+
+set(${CMAKE_CONFIG_NAME}_VERSION ${VERSION})
+ 
+# Make relative paths absolute (needed later on)
+foreach(p LIB BIN INCLUDE CMAKE)
+  set(var INSTALL_${p}_DIR)
+  if(NOT IS_ABSOLUTE "${${var}}")
+    set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+  endif()
+endforeach()
+
+set(CONFIG_TYPE "NOCONFIG")
+if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "")
+  string(TOUPPER ${CMAKE_BUILD_TYPE} CONFIG_TYPE)
 endif()
 
+file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
+  "${INSTALL_INC_DIR}")
+
+# ... for the build tree
+set(CONF_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/include")
+configure_file("${CMAKE_SOURCE_DIR}/cmake/${CMAKE_CONFIG_NAME}Config.cmake.in"
+  "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_NAME}Config.cmake" @ONLY)
+
+# ... for the install tree
+set(CONF_INCLUDE_DIRS "\${INSTALL_CMAKE_DIR}/${REL_INCLUDE_DIR}")
+configure_file("${CMAKE_SOURCE_DIR}/cmake/${CMAKE_CONFIG_NAME}Config.cmake.in"
+  "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_CONFIG_NAME}Config.cmake" @ONLY)
+# ... for both
+configure_file("${CMAKE_SOURCE_DIR}/cmake/${CMAKE_CONFIG_NAME}ConfigVersion.cmake.in"
+  "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_NAME}ConfigVersion.cmake" @ONLY)
+ 
+install(FILES
+  "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_CONFIG_NAME}Config.cmake"
+  "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_NAME}ConfigVersion.cmake"
+  DESTINATION ${DEF_INSTALL_CMAKE_DIR} )
+
+# Install the export set for use with the install-tree
+install(EXPORT ${CMAKE_CONFIG_NAME}Targets DESTINATION ${DEF_INSTALL_CMAKE_DIR})

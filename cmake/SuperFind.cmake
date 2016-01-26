@@ -44,10 +44,10 @@ function(super_find_package name)
       simple_message("WITH_${name} is set. Searching for ${PKG_NAME}")
 
       #find the repo name.
-      if(${PKG_NAME}_REPOSITORY_NAME)
-	set(PKG_REPOSITORY_NAME ${${PKG_NAME}_REPOSITORY_NAME})
-      elseif(super_find_package_REPOSITORY_NAME)
+      if(super_find_package_REPOSITORY_NAME)
 	set(PKG_REPOSITORY_NAME ${super_find_package_REPOSITORY_NAME})
+      elseif(${PKG_NAME}_REPOSITORY_NAME)
+	set(PKG_REPOSITORY_NAME ${${PKG_NAME}_REPOSITORY_NAME})
       else()
 	set(PKG_REPOSITORY_NAME ${PKG_NAME})
       endif()

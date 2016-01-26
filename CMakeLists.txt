@@ -117,7 +117,7 @@ include_directories(${ZLIB_INCLUDE_DIR})
 # include_directories(${ICONV_INCLUDE_DIR})
 
 #find_anyproject(LibLZMA)
-#super_find_package(LibLZMA REPO "lib_lzma" CMAKE_ARGS "-DCMAKE_C_FLAGS='-std=c99 -Wno-implicit-function-declaration'")
+#super_find_package(LibLZMA REPOSITORY_NAME "lib_lzma" CMAKE_ARGS "-DCMAKE_C_FLAGS='-std=c99 -Wno-implicit-function-declaration'")
 super_find_package(LibLZMA)
 include_directories(${LibLZMA_INCLUDE_DIR})
 

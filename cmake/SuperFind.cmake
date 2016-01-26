@@ -60,8 +60,11 @@ function(super_find_package name)
   else()  
     set(_WITH_OPTION_DEFAULT FALSE)
   endif()
+
+  set(_WITH_EXTERNAL_OPTION_DEFAULT FALSE)
   
   option(WITH_${name} "Set ON to use ${name}" ${_WITH_OPTION_DEFAULT})
+  option(WITH_EXTERNAL_${name} "Set ON to use ${name} from custom install location" ${_WITH_EXTERNAL_OPTION_DEFAULT})
   
   if(${WITH_${name}})
     
@@ -87,14 +90,22 @@ function(super_find_package name)
 	  WORKING_DIRECTORY "${ep_base}/Build/${PKG_NAME}")
       endif()
     else()
-      find_package(${PKG_NAME} QUIET)
+      if(NOT ${WITH_EXTERNAL_${name}})
+	find_package(${PKG_NAME} QUIET)
+      else()
+	find_package(${PKG_NAME} REQUIRED)
+      endif()
       if(${PKG_NAME}_FOUND)
         simple_message("Found ${PKG_NAME} from find_package(${PKG_NAME})")
-	#do an empty target.
-	add_custom_target(${PKG_NAME})
+	if(NOT ${WITH_EXTERNAL_${name}})
+	  #do an empty target.
+	  add_custom_target(${PKG_NAME})
+	endif()  
       endif()
     endif()
-            
+    
+    if(NOT ${WITH_EXTERNAL_${name}})
+      
     if(NOT ${PKG_NAME}_FOUND)
 	
       if(NOT DEFINED GIT_EXECUTABLE)
@@ -165,7 +176,9 @@ function(super_find_package name)
 	message(FATAL_ERROR "error running cmake configure on ${PKG_NAME}")
       endif()
       
-    endif()  #if(NOT ${PKG_NAME}_FOUND OR EXISTS "${ep_base}/Stamp/${PKG_NAME}/${PKG_NAME}-download")	
+    endif()  #if(NOT ${PKG_NAME}_FOUND OR EXISTS "${ep_base}/Stamp/${PKG_NAME}/${PKG_NAME}-download")
+
+  endif() # 	if(NOT ${WITH_EXTERNAL_${name}})
   endif()     # if(WITH_${name})
 endfunction()
 

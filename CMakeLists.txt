@@ -100,7 +100,7 @@ elseif(WIN32)
   if (MSVC)
     add_definitions (-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -D_CRT_NON_CONFORMING_SWPRINTFS -D_CRT_SECURE_NO_DEPRECATE)
   endif()
-endif()        
+endif()
 
 if(WITH_THREADS)
   find_package(Threads REQUIRED)
@@ -266,12 +266,10 @@ if(TARGET LibLZMA)
   add_dependencies(${LIB_NAME} LibLZMA)
 endif()
 
-target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARIES} ${ZLIB_LIBRARIES})
-
-target_link_libraries(${LIB_NAME} ${LibXml2_LINK_LIBS})
+target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARIES} ${ZLIB_LIBRARIES} ${LibXml2_LINK_LIBS})
 
 
-#set(CMAKE_CONFIG_NAME ${PROJECT_NAME})
+
 set(CMAKE_CONFIG_NAME "LibXml2")
 
 export(TARGETS ${LIB_NAME} FILE ${CMAKE_CONFIG_NAME}Targets.cmake EXPORT_LINK_INTERFACE_LIBRARIES)

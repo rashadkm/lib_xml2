@@ -264,7 +264,11 @@ if(TARGET LibLZMA)
   add_dependencies(${LIB_NAME} LibLZMA)
 endif()
 
-target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARIES} ${ZLIB_LIBRARIES}) 
+target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARIES} ${ZLIB_LIBRARIES})
+
+if(WIN32)
+  target_link_libraries(${LIB_NAME} ws2_32)
+endif()
 #target_link_extlibraries(${LIB_NAME})
 
 #set(CMAKE_CONFIG_NAME ${PROJECT_NAME})

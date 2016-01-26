@@ -88,7 +88,7 @@ option(WITH_PYTHON "Build Python bindings" OFF)
 #include(FindAnyProject)
 include(SuperFind)
 
-set(LibXml2_LINK_LIBS)
+set(TARGET_LINK_LIBS)
 
 if(UNIX)
   set(MODULE_EXTENSION "${CMAKE_SHARED_LIBRARY_SUFFIX}")
@@ -96,7 +96,7 @@ elseif(WIN32)
   set(MODULE_EXTENSION "${CMAKE_LINK_LIBRARY_SUFFIX}")
   set(THREADS_W32 TRUE)
   add_definitions(-DHAVE_WIN32_THREADS -DWIN32)
-  list(APPEND LibXml2_LINK_LIBS ws2_32.lib Secur32.lib)
+  list(APPEND TARGET_LINK_LIBS ws2_32.lib Secur32.lib)
   if (MSVC)
     add_definitions (-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -D_CRT_NON_CONFORMING_SWPRINTFS -D_CRT_SECURE_NO_DEPRECATE)
   endif()
@@ -104,14 +104,14 @@ endif()
 
 if(WITH_THREADS)
   find_package(Threads REQUIRED)
-  list(APPEND LibXml2_LINK_LIBS ${CMAKE_THREAD_LIBS_INIT})
+  list(APPEND TARGET_LINK_LIBS ${CMAKE_THREAD_LIBS_INIT})
   if(THREADS_FOUND)
     add_definitions(-DLIBXML_THREAD_ENABLED)
   endif()
 endif()
 
 #find_anyproject(ZLIB)
-super_find_package(ZLIB)
+super_find_package(ZLIB COMPONENTS "-DWITH_LZMA=ON")
 include_directories(${ZLIB_INCLUDE_DIR})
 
 #find_anyproject(ICONV)
@@ -265,9 +265,11 @@ endif()
 if(TARGET LibLZMA)
   add_dependencies(${LIB_NAME} LibLZMA)
 endif()
-target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARY} ${ZLIB_LIBRARIES} ${LibXml2_LINK_LIBS})
 
 
+target_link_libraries(${LIB_NAME} ${TARGET_LINK_LIBS})
+
+#message(FATAL_ERROR "TARGET_LINK_LIBS=${TARGET_LINK_LIBS}")
 
 set(CMAKE_CONFIG_NAME "LibXml2")
 

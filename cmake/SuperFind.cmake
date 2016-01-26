@@ -61,7 +61,7 @@ function(super_find_package name)
     set(_WITH_OPTION_DEFAULT FALSE)
   endif()
 
-  set(_WITH_EXTERNAL_OPTION_DEFAULT FALSE)
+  set(_WITH_EXTERNAL_OPTION_DEFAULT TRUE)
   
   option(WITH_${name} "Set ON to use ${name}" ${_WITH_OPTION_DEFAULT})
   option(WITH_EXTERNAL_${name} "Set ON to use ${name} from custom install location" ${_WITH_EXTERNAL_OPTION_DEFAULT})

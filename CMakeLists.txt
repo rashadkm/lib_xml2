@@ -265,8 +265,7 @@ endif()
 if(TARGET LibLZMA)
   add_dependencies(${LIB_NAME} LibLZMA)
 endif()
-
-target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARIES} ${ZLIB_LIBRARIES} ${LibXml2_LINK_LIBS})
+target_link_libraries(${LIB_NAME} ${ICONV_LIBRARIES} ${LIBLZMA_LIBRARY} ${ZLIB_LIBRARIES} ${LibXml2_LINK_LIBS})
 
 
 

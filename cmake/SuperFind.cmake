@@ -56,29 +56,33 @@ function(super_find_package name)
   cmake_parse_arguments(super_find_package "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )  
   
   if (super_find_package_REQUIRED OR super_find_package_DEFAULT)
-    set(_WITH_OPTION_DEFAULT TRUE)
+    set(_WITH_OPTION_DEFAULT FALSE)
   else()  
     set(_WITH_OPTION_DEFAULT FALSE)
   endif()
 
-  set(_WITH_EXTERNAL_OPTION_DEFAULT TRUE)
+  set(_WITH_EXTERNAL_OPTION_DEFAULT FALSE)
+  if(WIN32)
+    set(_WITH_EXTERNAL_OPTION_DEFAULT TRUE)
+  endif()
   
-  option(WITH_${name} "Set ON to use ${name}" ${_WITH_OPTION_DEFAULT})
-#  option(WITH_INTERNAL_${name} "Set ON to download and configure ${name}. ON by default" ${_WITH_EXTERNAL_OPTION_DEFAULT})
-  
-  if(${WITH_${name}})
-    option(WITH_${name}_EXTERNAL "Set ON to use external ${name}" OFF)
+  option(WITH_${name} "Set ON to use ${name}" OFF)
+
+  if(WITH_${name})    
+    option(WITH_${name}_EXTERNAL "Set ON to use external ${name}" ${_WITH_EXTERNAL_OPTION_DEFAULT})
+
+    set(${PKG_NAME}_OPTIONS)
+    if(super_find_package_COMPONENTS)
+      list(APPEND ${name}_OPTIONS "COMPONENTS ${super_find_package_COMPONENTS}")
+    endif()
+ 
     if(WITH_${name}_EXTERNAL)
       
       set(PKG_NAME ${name})
+
       string(TOUPPER ${name} PKG_NAME_)
-    
       simple_message("WITH_${name} is set. Searching for ${PKG_NAME}")
-      if(NOT super_find_package_COMPONENTS)
-	find_package(${PKG_NAME} QUIET)
-      else()
-	find_package(${PKG_NAME} COMPONENTS ${super_find_package_COMPONENTS} QUIET)
-      endif()
+      find_package(${PKG_NAME} ${${PKG_NAME}_OPTIONS} QUIET)
       if(${PKG_NAME_}_FOUND)
         simple_message("Found ${PKG_NAME} from find_package(${PKG_NAME})")
 	# do an empty target.
@@ -87,12 +91,7 @@ function(super_find_package name)
       else() # if(${PKG_NAME}_FOUND) find_package
 	if(EXISTS ${ep_base}/Build/${PKG_NAME}/${PKG_NAME}Config.cmake)
 
-	  if(NOT super_find_package_COMPONENTS)
-	    find_package(${PKG_NAME} PATHS ${ep_base}/Build/${PKG_NAME})
-	  else()
-	    find_package(${PKG_NAME} COMPONENTS ${super_find_package_COMPONENTS} PATHS ${ep_base}/Build/${PKG_NAME})
-	  endif()
-	  
+	  find_package(${PKG_NAME} ${${PKG_NAME}_OPTIONS} PATHS ${ep_base}/Build/${PKG_NAME})
 
 	  if(${PKG_NAME_}_FOUND)
 	    simple_message("Found ${PKG_NAME} from ${ep_base}/Build/${PKG_NAME}/${PKG_NAME}Config.cmake")
@@ -180,17 +179,13 @@ function(super_find_package name)
 	  include(${ep_base}/Build/${PKG_NAME}/${PKG_NAME}Config.cmake)
 	else()
 	  message(FATAL_ERROR "error running cmake configure on ${PKG_NAME}")
-	endif()
-	
+	endif()	
       endif()  #if(NOT ${PKG_NAME}_FOUND OR EXISTS "${ep_base}/Stamp/${PKG_NAME}/${PKG_NAME}-download")
-      endif() # 	if(${WITH_EXTERNAL_${name}})
     else()
-      if(NOT super_find_package_COMPONENTS)
-	find_package(${name} REQUIRED)
-      else()
-	find_package(${name} COMPONENTS ${super_find_package_COMPONENTS} REQUIRED)
-      endif()
-    endif()     # if(WITH_${name})
+      find_package(${name} ${${PKG_NAME}_OPTIONS} REQUIRED)            
+    endif() # 	if(${WITH_EXTERNAL_${name}})
+     
+  endif()     # if(WITH_${name})
 
     string(TOUPPER ${name} name_)
     set(TARGET_LINK_LIBS ${TARGET_LINK_LIBS} ${${name_}_LIBRARIES} PARENT_SCOPE)

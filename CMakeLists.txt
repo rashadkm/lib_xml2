@@ -111,7 +111,7 @@ if(WITH_THREADS)
 endif()
 
 #find_anyproject(ZLIB)
-super_find_package(ZLIB COMPONENTS "-DWITH_LZMA=ON")
+super_find_package(ZLIB COMPONENTS LZMA)
 include_directories(${ZLIB_INCLUDE_DIR})
 
 #find_anyproject(ICONV)
@@ -266,10 +266,7 @@ if(TARGET LibLZMA)
   add_dependencies(${LIB_NAME} LibLZMA)
 endif()
 
-
 target_link_libraries(${LIB_NAME} ${TARGET_LINK_LIBS})
-
-#message(FATAL_ERROR "TARGET_LINK_LIBS=${TARGET_LINK_LIBS}")
 
 set(CMAKE_CONFIG_NAME "LibXml2")
 

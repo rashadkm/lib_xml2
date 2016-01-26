@@ -27,7 +27,7 @@ function(super_find_package name)
     if (super_find_package_REQUIRED OR super_find_package_DEFAULT)
         set(_WITH_OPTION_DEFAULT TRUE)
     else()  
-        set(_WITH_OPTION_DEFAULT TRUE)
+        set(_WITH_OPTION_DEFAULT FALSE)
     endif()
     
     set(WITHOPT "${WITHOPT}option(WITH_${name} \"Set ON to use ${name}\" ${_WITH_OPTION_ON})\n")
